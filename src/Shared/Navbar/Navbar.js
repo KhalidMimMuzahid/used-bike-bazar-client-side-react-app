@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import bikeLogo from "../../Assets/Logo/bike-logo.png";
+import { AuthContext } from "../../Context/AuthProvider";
 const Navbar = () => {
+  const { currentUser, logOut } = useContext(AuthContext);
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const navElement = (
     <>
       <li>
@@ -51,9 +60,23 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0">{navElement}</ul>
       </div>
       <div className="navbar-end">
-        <Link className="btn">sign Up</Link>
-        <Link className="btn">sign In</Link>
-        <Link className="btn">sign Out</Link>
+        {!currentUser?.uid ? (
+          <>
+            <Link to="/signup" className="btn">
+              sign Up
+            </Link>
+            <Link to="/signin" className="btn">
+              sign In
+            </Link>
+          </>
+        ) : (
+          <>
+            {" "}
+            <button onClick={handleSignOut} className="btn">
+              sign Out
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
