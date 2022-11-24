@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { info } from "daisyui/src/colors/colorNames";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthProvider";
+import useToken from "../../hooks/useToken/useToken";
+import handleGoogleSignIn from "../../Utilities/handleGoogleSignIn";
 
 const SignUp = () => {
   const { createUserwithPassword, updateUser, googleSignIn } =
@@ -16,7 +19,11 @@ const SignUp = () => {
   const imageHostKey = process.env.REACT_APP_imagebb_key;
   const navigate = useNavigate();
   const [signUpError, setSignUpError] = useState("");
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const [token] = useToken(currentUser);
+  if (token) {
+    navigate("/");
+  }
   const handleSignUp = (data) => {
     setSignUpError("");
     createUserwithPassword(data.email, data.password)
@@ -69,7 +76,7 @@ const SignUp = () => {
                     .then((data) => {
                       if (data.acknowledged) {
                         toast.success("profile signed up successfully");
-                        navigate("/");
+                        setCurrentUser(user.email);
                       }
                     });
                 })
@@ -96,22 +103,6 @@ const SignUp = () => {
   //       return data;
   //     },
   //   });
-  const updateUserToDB = () => {};
-  const handleGoogleSignIn = () => {
-    setSignUpError("");
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        // ...
-        if (user) {
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setSignUpError(errorMessage);
-      });
-  };
 
   return (
     <div className="h-screen flex justify-center items-center">
@@ -223,7 +214,12 @@ const SignUp = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
+        <button
+          onClick={() =>
+            handleGoogleSignIn(setSignUpError, googleSignIn, setCurrentUser)
+          }
+          className="btn btn-outline w-full"
+        >
           CONTINUE WITH GOOGLE
         </button>
       </div>

@@ -1,11 +1,17 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthProvider";
+import useToken from "../../hooks/useToken/useToken";
+import handleGoogleSignIn from "../../Utilities/handleGoogleSignIn";
 
 const SignIn = () => {
   const { signIn, googleSignIn, resetPassword } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
+  const [currentUser, setCUrrentUser] = useState(null);
+  const [token] = useToken(currentUser);
+
   const {
     register,
     formState: { errors },
@@ -14,14 +20,20 @@ const SignIn = () => {
 
   const location = useLocation();
   const from = location.state?.location?.pathname || "/";
+
   const navigate = useNavigate();
+  if (token) {
+    navigate(from, { replace: true });
+  }
   const handleSignIn = (data) => {
     setLoginError("");
     signIn(data.email, data.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        navigate(from, { replace: true });
+        console.log(user.email);
+        setCUrrentUser(user.email);
+        // navigate(from, { replace: true });
         // ...
       })
       .catch((error) => {
@@ -31,21 +43,6 @@ const SignIn = () => {
       });
   };
 
-  const handleGoogleSignIn = () => {
-    setLoginError("");
-    googleSignIn()
-      .then((result) => {
-        const user = result.user;
-        // ...
-        if (user) {
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setLoginError(errorMessage);
-      });
-  };
   const handleResetPassword = (data) => {
     setLoginError("");
     console.log(data);
@@ -125,7 +122,12 @@ const SignIn = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
+        <button
+          onClick={() =>
+            handleGoogleSignIn(setLoginError, googleSignIn, setCUrrentUser)
+          }
+          className="btn btn-outline w-full"
+        >
           CONTINUE WITH GOOGLE
         </button>
       </div>

@@ -4,10 +4,12 @@ import bikeLogo from "../../Assets/Logo/bike-logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
 const Navbar = () => {
   const { currentUser, logOut } = useContext(AuthContext);
-  console.log(currentUser);
+  // console.log(currentUser);
   const handleSignOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.removeItem("accessToken");
+      })
       .catch((error) => {
         console.log(error);
       });
