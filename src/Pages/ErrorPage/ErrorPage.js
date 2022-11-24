@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
@@ -13,9 +14,12 @@ const ErrorPage = () => {
             But dont worry, you can find plenty of other things on our homepage.
           </p>
 
-          <button class="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700">
+          <Link
+            to="/"
+            class="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700"
+          >
             back to homepage
-          </button>
+          </Link>
         </div>
         <div class="max-w-lg">{/* this is image section */}</div>
       </div>
