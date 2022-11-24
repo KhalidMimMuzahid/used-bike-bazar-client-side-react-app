@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -5,50 +6,97 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthProvider";
 
 const SignUp = () => {
-  const { createUserwithPassword, updateUser, googleSignIn, okk } =
+  const { createUserwithPassword, updateUser, googleSignIn } =
     useContext(AuthContext);
-  console.log(okk);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const imageHostKey = process.env.REACT_APP_imagebb_key;
   const navigate = useNavigate();
   const [signUpError, setSignUpError] = useState("");
 
   const handleSignUp = (data) => {
     setSignUpError("");
-    console.log(data);
-    // createUserwithPassword(data.email, data.password)
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     const user = userCredential.user;
-    //     // ...
-    //     console.log(user);
-    //     const info = {
-    //       displayName: data.name,
-    //     };
-    //     updateUser(info)
-    //       .then(() => {
-    //         // Profile updated!
-    //         // ...
-    //         toast.success("profile updated");
-    //         navigate("/");
-    //       })
-    //       .catch((error) => {
-    //         // An error occurred
-    //         // ...
-    //         setSignUpError(error);
-    //       });
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     setSignUpError(errorMessage);
-    //     // ..
-    //   });
+    createUserwithPassword(data.email, data.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append("image", image);
+        // console.log("user", user, "\n", data.image[0]);
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((imageData) => {
+            if (imageData?.success) {
+              //   console.log(imageData.data.display_url);
+              const photoUrl = imageData.data.display_url;
+
+              const info = {
+                displayName: data.name,
+                photoURL: photoUrl,
+              };
+              updateUser(info)
+                .then(() => {
+                  // Profile updated!
+                  // ...
+
+                  // TODO: save data to the database
+
+                  //   console.log("user", user, "\n", "data", data);
+                  const userInfo = {
+                    name: user?.displayName,
+                    email: user?.email,
+                    photo: user?.photoURL,
+                    userUid: user?.uid,
+                    role: data?.role,
+                  };
+                  fetch("http://localhost:5000/user", {
+                    method: "POST",
+                    headers: {
+                      "content-type": "application/json",
+                    },
+                    body: JSON.stringify(userInfo),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (data.acknowledged) {
+                        toast.success("profile signed up successfully");
+                        navigate("/");
+                      }
+                    });
+                })
+                .catch((error) => {
+                  // An error occurred
+                  // ...
+                  setSignUpError(error);
+                });
+            }
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setSignUpError(errorMessage);
+        // ..
+      });
   };
+  //   const { data } = useQuery({
+  //     queryKey: ["user"],
+  //     queryFn: async () => {
+  //       const res = fetch("");
+  //       const data = await res.json();
+  //       return data;
+  //     },
+  //   });
+  const updateUserToDB = () => {};
   const handleGoogleSignIn = () => {
     setSignUpError("");
     googleSignIn()
@@ -104,17 +152,36 @@ const SignUp = () => {
           </div>
 
           <div className="form-control w-full max-w-xs flex">
-            <div className="flex justify-between">
-              <label className="label ">
-                <span className="label-text">Role</span>
-              </label>
-              <select defaultValue="buyer" {...register("role")}>
-                <option value="buyer" selected>
-                  buyer
-                </option>
-                <option value="seller">seller</option>
-              </select>
-            </div>
+            <label className="label ">
+              <span className="label-text">Role</span>
+            </label>
+            <select
+              className="input input-bordered w-full max-w-xs"
+              defaultValue="buyer"
+              {...register("role")}
+            >
+              <option disabled selected>
+                Please Select a role
+              </option>
+              <option value="buyer">buyer</option>
+              <option value="seller">seller</option>
+            </select>
+          </div>
+
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">Your Photo</span>
+            </label>
+            <input
+              type="file"
+              {...register("image", {
+                required: "you must provide your photo",
+              })}
+              className="input input-bordered w-full max-w-xs"
+            />
+            {errors.image && (
+              <p className="text-red-600">{errors?.image?.message}</p>
+            )}
           </div>
 
           <div className="form-control w-full max-w-xs">

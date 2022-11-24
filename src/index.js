@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import AuthProvider from "./Context/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthProvider>
@@ -18,3 +19,11 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+{
+  /* <QueryClientProvider client={QueryClient}>
+<AuthProvider>
+  <ToastContainer position="top-center" />
+  <App />
+</AuthProvider>
+</QueryClientProvider> */
+}

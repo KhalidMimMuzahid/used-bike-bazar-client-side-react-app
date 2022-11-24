@@ -4,6 +4,7 @@ import bikeLogo from "../../Assets/Logo/bike-logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
 const Navbar = () => {
   const { currentUser, logOut } = useContext(AuthContext);
+  console.log(currentUser);
   const handleSignOut = () => {
     logOut()
       .then(() => {})
@@ -14,13 +15,13 @@ const Navbar = () => {
   const navElement = (
     <>
       <li>
-        <a>Item 1</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a>Item 2</a>
+        <Link to="/blog">Blog</Link>
       </li>
       <li>
-        <a>Item 3</a>
+        <Link to="dashboard">DashBoard</Link>
       </li>
     </>
   );
@@ -71,7 +72,15 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            {" "}
+            <div className="mr-3">
+              <img
+                src={currentUser?.photoURL}
+                alt={currentUser?.displayName}
+                title={currentUser?.displayName}
+                className="rounded-full"
+                style={{ height: "40px", width: "40px" }}
+              />
+            </div>
             <button onClick={handleSignOut} className="btn">
               sign Out
             </button>
