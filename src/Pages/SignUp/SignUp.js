@@ -20,34 +20,34 @@ const SignUp = () => {
   const handleSignUp = (data) => {
     setSignUpError("");
     console.log(data);
-    createUserwithPassword(data.email, data.password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-        console.log(user);
-        const info = {
-          displayName: data.name,
-        };
-        updateUser(info)
-          .then(() => {
-            // Profile updated!
-            // ...
-            toast.success("profile updated");
-            navigate("/");
-          })
-          .catch((error) => {
-            // An error occurred
-            // ...
-            setSignUpError(error);
-          });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setSignUpError(errorMessage);
-        // ..
-      });
+    // createUserwithPassword(data.email, data.password)
+    //   .then((userCredential) => {
+    //     // Signed in
+    //     const user = userCredential.user;
+    //     // ...
+    //     console.log(user);
+    //     const info = {
+    //       displayName: data.name,
+    //     };
+    //     updateUser(info)
+    //       .then(() => {
+    //         // Profile updated!
+    //         // ...
+    //         toast.success("profile updated");
+    //         navigate("/");
+    //       })
+    //       .catch((error) => {
+    //         // An error occurred
+    //         // ...
+    //         setSignUpError(error);
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     setSignUpError(errorMessage);
+    //     // ..
+    //   });
   };
   const handleGoogleSignIn = () => {
     setSignUpError("");
@@ -101,6 +101,20 @@ const SignUp = () => {
             {errors.email && (
               <p className="text-red-600">{errors?.email?.message}</p>
             )}
+          </div>
+
+          <div className="form-control w-full max-w-xs flex">
+            <div className="flex justify-between">
+              <label className="label ">
+                <span className="label-text">Role</span>
+              </label>
+              <select defaultValue="buyer" {...register("role")}>
+                <option value="buyer" selected>
+                  buyer
+                </option>
+                <option value="seller">seller</option>
+              </select>
+            </div>
           </div>
 
           <div className="form-control w-full max-w-xs">
