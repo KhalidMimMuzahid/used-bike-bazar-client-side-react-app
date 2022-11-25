@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import handleAdvertisePost from "../../../../Utilities/handlePostAdvertise";
 
 const EachProduct = ({ eachProduct, refetch }) => {
   const {
@@ -20,6 +21,12 @@ const EachProduct = ({ eachProduct, refetch }) => {
     _id,
   } = eachProduct;
   const handleDeletPost = (_id) => {
+    const isAgree = window.confirm(
+      "are you sure you want to delete this product?"
+    );
+    if (!isAgree) {
+      return;
+    }
     console.log(_id);
     fetch(`http://localhost:5000/delete?_id=${_id}`, {
       method: "DELETE",
@@ -32,6 +39,19 @@ const EachProduct = ({ eachProduct, refetch }) => {
         }
       });
   };
+  const handleAdvertisePost = (_id) => {
+    fetch(`http://localhost:5000/makeadvertisement?_id=${_id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.acknowledged) {
+          toast.success("this post is advertised");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
@@ -57,19 +77,27 @@ const EachProduct = ({ eachProduct, refetch }) => {
             <h1>{sellerName}</h1>
           </div>
         </div>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-start">
           <button
-            onClick={() => handleDeletPost(_id)}
-            className="btn btn-sm bg-red-700 text-white "
+            disabled={eachProduct?.isAdvertise || sellingStatus === "sold"}
+            onClick={() => handleAdvertisePost(_id)}
+            className="btn btn-sm bg-green-700 text-white "
           >
-            delet Post
+            {eachProduct?.isAdvertise ? "Advertised" : "Advertise"}
           </button>
+
           <Link
             className="btn btn-sm"
             to={`/dashboard/myproducts/details/${_id}`}
           >
             details
           </Link>
+          <button
+            onClick={() => handleDeletPost(_id)}
+            className="block w-full btn btn-sm bg-red-700 text-white "
+          >
+            delete post
+          </button>
         </div>
       </div>
     </div>

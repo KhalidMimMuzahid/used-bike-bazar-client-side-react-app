@@ -69,7 +69,7 @@ const ProductDetails = () => {
         <div className="card-actions justify-end">
           <button
             onClick={() => handleDeletPost(_id)}
-            className="btn btn-sm bg-red-700 text-white "
+            className="w-full btn btn-sm bg-red-700 text-white "
           >
             delet Post
           </button>

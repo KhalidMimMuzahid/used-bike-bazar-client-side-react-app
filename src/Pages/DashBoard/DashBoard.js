@@ -6,6 +6,9 @@ import useRole from "../../hooks/useRole/useRole";
 const DashBoard = () => {
   const { currentUser } = useContext(AuthContext);
   const [role, roleLoading] = useRole(currentUser?.uid);
+  if (roleLoading) {
+    return <h1>loading</h1>;
+  }
   return (
     <div className="drawer drawer-mobile">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
