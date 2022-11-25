@@ -1,7 +1,39 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
+import EachBuyer from "./EachBuyer/EachBuyer";
 
 const MyBuyers = () => {
-  return <div>my buyers</div>;
+  const { currentUser } = useContext(AuthContext);
+  const email = currentUser?.email;
+  const { data: myBuyers = [], refetch } = useQuery({
+    queryKey: ["user", email],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/mybuyers?email=${email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+  return (
+    <div>
+      <div className="overflow-x-auto w-full">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>serial</th>
+              <th>User</th>
+              <th>phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            {myBuyers.map((eachBuyer, index) => (
+              <EachBuyer key={index} index={index} eachBuyer={eachBuyer} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default MyBuyers;
