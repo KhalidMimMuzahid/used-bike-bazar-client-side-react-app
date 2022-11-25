@@ -1,14 +1,74 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 const AddProducts = () => {
+  const imageHostKey = process.env.REACT_APP_imagebb_key;
+  const { currentUser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const handleformSubmit = () => {};
+  const handleformSubmit = (data) => {
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        if (imageData?.success) {
+          //   console.log(imageData.data.display_url);
+          const image = imageData.data.display_url;
+
+          // toast.success("photo added");
+          // console.log(
+          //   "image",
+          //   image,
+          //   "\ndata",
+          //   data,
+          //   "\n currentUser",
+          //   currentUser
+          // );
+          const postInfo = {
+            bikeModel: data?.name,
+            engin: data?.engin,
+            brandName: data?.brand,
+            category: data?.category,
+            brandNewPrice: data?.brandNewPrice,
+            askingPrice: data?.askingPrice,
+            bikeImage: image,
+            totalUsed: data?.usedTime,
+            sellerName: currentUser?.displayName,
+            sellerEmail: currentUser?.email,
+            sellerImage: currentUser?.photoURL,
+            paymentStatus: "unpaid",
+            sellingStatus: "unsold",
+          };
+          fetch("http://localhost:5000/addproduct", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(postInfo),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data?.acknowledged) {
+                toast.success("your product is posted succesfully");
+                reset();
+              }
+            });
+        }
+      });
+  };
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="w-96 px-4">
@@ -16,7 +76,7 @@ const AddProducts = () => {
         <form onSubmit={handleSubmit(handleformSubmit)}>
           <div className="form-control w-full max-w-xs">
             <label className="label">
-              <span className="label-text">Product Name</span>
+              <span className="label-text">Bike model</span>
             </label>
             <input
               type="text"
@@ -27,6 +87,21 @@ const AddProducts = () => {
             />
             {errors.name && (
               <p className="text-red-600">{errors?.name?.message}</p>
+            )}
+          </div>
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">Engin (CC)</span>
+            </label>
+            <input
+              type="text"
+              {...register("engin", {
+                required: "you must provide engiene CC",
+              })}
+              className="input h-8 input-bordered w-full max-w-xs"
+            />
+            {errors.engin && (
+              <p className="text-red-600">{errors?.engin?.message}</p>
             )}
           </div>
 
@@ -58,6 +133,21 @@ const AddProducts = () => {
           </div>
           <div className="form-control w-full max-w-xs">
             <label className="label">
+              <span className="label-text">Brand Name</span>
+            </label>
+            <input
+              type="text"
+              {...register("brand", {
+                required: "you must provide brand Name",
+              })}
+              className="input h-8 input-bordered w-full max-w-xs"
+            />
+            {errors.brand && (
+              <p className="text-red-600">{errors?.brand?.message}</p>
+            )}
+          </div>
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
               <span className="label-text">brand New Price</span>
             </label>
             <input
@@ -86,21 +176,7 @@ const AddProducts = () => {
               <p className="text-red-600">{errors?.askingPrice?.message}</p>
             )}
           </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Brand Name</span>
-            </label>
-            <input
-              type="text"
-              {...register("brand", {
-                required: "you must provide brand Name",
-              })}
-              className="input h-8 input-bordered w-full max-w-xs"
-            />
-            {errors.brand && (
-              <p className="text-red-600">{errors?.brand?.message}</p>
-            )}
-          </div>
+
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Total Used</span>

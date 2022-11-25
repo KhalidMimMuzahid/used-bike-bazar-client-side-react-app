@@ -95,14 +95,6 @@ const SignUp = () => {
         // ..
       });
   };
-  //   const { data } = useQuery({
-  //     queryKey: ["user"],
-  //     queryFn: async () => {
-  //       const res = fetch("");
-  //       const data = await res.json();
-  //       return data;
-  //     },
-  //   });
 
   return (
     <div className="h-screen flex justify-center items-center">

@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main/Main";
 import AddProducts from "../Pages/DashBoard/AddProducts/AddProducts";
@@ -7,6 +8,7 @@ import DashBoard from "../Pages/DashBoard/DashBoard";
 import MyBuyers from "../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../Pages/DashBoard/MyOrders/MyOrders";
 import MyProducts from "../Pages/DashBoard/MyProducts/MyProducts";
+import ProductDetails from "../Pages/DashBoard/MyProducts/ProductDetails/ProductDetails";
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
@@ -72,6 +74,17 @@ export const router = createBrowserRouter([
             element: (
               <SellerRoute>
                 <MyBuyers />
+              </SellerRoute>
+            ),
+          },
+
+          {
+            path: "/dashboard/myproducts/details/:_id",
+            loader: async ({ params }) =>
+              fetch(`http://localhost:5000/productsdetails?_id=${params._id}`),
+            element: (
+              <SellerRoute>
+                <ProductDetails />
               </SellerRoute>
             ),
           },
