@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
+import useRole from "../../hooks/useRole/useRole";
 
 const DashBoard = () => {
+  const { currentUser } = useContext(AuthContext);
+  const [role, roleLoading] = useRole(currentUser?.uid);
   return (
     <div className="drawer drawer-mobile">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
@@ -14,10 +18,48 @@ const DashBoard = () => {
         <ul className="menu p-4 w-80 bg-base-100 text-base-content">
           {/* Sidebar content here  */}
           {/* buyer can see this  */}
+          {role === "xbuyer" && (
+            <>
+              <li>
+                <Link to="/dashboard/myorders">My orders</Link>
+              </li>
+            </>
+          )}
+
+          {/* seller can see this  */}
+          {role === "xseller" && (
+            <>
+              <li>
+                <Link to="/dashboard/addproduct">Add A product</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/myproducts">My Products</Link>
+              </li>
+              {/* my buyers is optional */}
+              <li>
+                <Link to="/dashboard/mybuyers">My buyers</Link>
+              </li>
+            </>
+          )}
+
+          {/* only admin can see this  */}
+          {role === "xadmin" && (
+            <>
+              <li>
+                <Link to="/dashboard/allsellers">All Sellers</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/allbuyers">All Buyers</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/reporteditems">Reported Items</Link>
+              </li>
+            </>
+          )}
+
           <li>
             <Link to="/dashboard/myorders">My orders</Link>
           </li>
-          {/* seller can see this  */}
           <li>
             <Link to="/dashboard/addproduct">Add A product</Link>
           </li>
@@ -28,7 +70,6 @@ const DashBoard = () => {
           <li>
             <Link to="/dashboard/mybuyers">My buyers</Link>
           </li>
-          {/* only admin can see this  */}
           <li>
             <Link to="/dashboard/allsellers">All Sellers</Link>
           </li>

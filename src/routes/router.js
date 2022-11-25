@@ -12,6 +12,10 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
+import AdminRoute from "./AdminRoute";
+import BuyerRoute from "./BuyerRoute";
+import PrivetRoute from "./PrivetRoute";
+import SellerRoute from "./SellerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -33,35 +37,67 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <DashBoard />,
+        element: (
+          <PrivetRoute>
+            <DashBoard />
+          </PrivetRoute>
+        ),
         children: [
           {
             path: "/dashboard/myorders",
-            element: <MyOrders />,
+            element: (
+              <BuyerRoute>
+                <MyOrders />
+              </BuyerRoute>
+            ),
           },
           {
             path: "/dashboard/addproduct",
-            element: <AddProducts />,
+            element: (
+              <SellerRoute>
+                <AddProducts />
+              </SellerRoute>
+            ),
           },
           {
             path: "/dashboard/myproducts",
-            element: <MyProducts />,
+            element: (
+              <SellerRoute>
+                <MyProducts />
+              </SellerRoute>
+            ),
           },
           {
             path: "/dashboard/mybuyers",
-            element: <MyBuyers />,
+            element: (
+              <SellerRoute>
+                <MyBuyers />
+              </SellerRoute>
+            ),
           },
           {
             path: "/dashboard/allsellers",
-            element: <AllSellers />,
+            element: (
+              <AdminRoute>
+                <AllSellers />
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/allbuyers",
-            element: <AllBuyers />,
+            element: (
+              <AdminRoute>
+                <AllBuyers />
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/reporteditems",
-            element: <ReportedItems />,
+            element: (
+              <AdminRoute>
+                <ReportedItems />
+              </AdminRoute>
+            ),
           },
         ],
       },

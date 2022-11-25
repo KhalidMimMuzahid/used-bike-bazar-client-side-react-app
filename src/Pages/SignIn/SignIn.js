@@ -19,7 +19,7 @@ const SignIn = () => {
   } = useForm();
 
   const location = useLocation();
-  const from = location.state?.location?.pathname || "/";
+  const from = location?.state?.from?.pathname || "/";
 
   const navigate = useNavigate();
   if (token) {
@@ -31,7 +31,6 @@ const SignIn = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user.email);
         setCUrrentUser(user.email);
         // navigate(from, { replace: true });
         // ...
