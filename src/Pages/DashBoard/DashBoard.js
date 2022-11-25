@@ -18,7 +18,7 @@ const DashBoard = () => {
         <ul className="menu p-4 w-80 bg-base-100 text-base-content">
           {/* Sidebar content here  */}
           {/* buyer can see this  */}
-          {role === "xbuyer" && (
+          {role === "buyer" && (
             <>
               <li>
                 <Link to="/dashboard/myorders">My orders</Link>
@@ -27,7 +27,7 @@ const DashBoard = () => {
           )}
 
           {/* seller can see this  */}
-          {role === "xseller" && (
+          {role === "seller" && (
             <>
               <li>
                 <Link to="/dashboard/addproduct">Add A product</Link>
@@ -43,7 +43,7 @@ const DashBoard = () => {
           )}
 
           {/* only admin can see this  */}
-          {role === "xadmin" && (
+          {role === "admin" && (
             <>
               <li>
                 <Link to="/dashboard/allsellers">All Sellers</Link>
@@ -56,29 +56,6 @@ const DashBoard = () => {
               </li>
             </>
           )}
-
-          <li>
-            <Link to="/dashboard/myorders">My orders</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/addproduct">Add A product</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/myproducts">My Products</Link>
-          </li>
-          {/* my buyers is optional */}
-          <li>
-            <Link to="/dashboard/mybuyers">My buyers</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/allsellers">All Sellers</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/allbuyers">All Buyers</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/reporteditems">Reported Items</Link>
-          </li>
         </ul>
       </div>
     </div>
