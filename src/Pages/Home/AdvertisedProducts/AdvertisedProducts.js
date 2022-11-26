@@ -3,10 +3,12 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../Context/AuthProvider";
+import useRole from "../../../hooks/useRole/useRole";
 import EachAdvertisementProduct from "./EachAdvertisementProduct/EachAdvertisementProduct";
 
 const AdvertisedProducts = () => {
   const { currentUser } = useContext(AuthContext);
+
   const { data: advertisedProducts = [], refetch } = useQuery({
     queryKey: [],
     queryFn: async () => {
@@ -84,10 +86,17 @@ const AdvertisedProducts = () => {
         toast.error("something went wrong, please try again");
       });
   };
+  const [role, roleLoading] = useRole(currentUser?.uid);
+  if (roleLoading) {
+    return;
+  }
   return (
     <>
-      {advertisedProducts.length !== 0 && (
+      {advertisedProducts.length !== 0 && role === "buyer" && (
         <div className="my-12">
+          <h1 className="font-bold text-2xl text-center mb-6">
+            Advertised Items
+          </h1>
           <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 gap-6 justify-center ">
             {advertisedProducts?.map((eachProduct, i) => (
               <EachAdvertisementProduct

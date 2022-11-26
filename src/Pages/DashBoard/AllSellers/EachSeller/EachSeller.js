@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 const EachSeller = ({ index, eachSeller, refetch }) => {
   const isVerified = eachSeller?.isVerified === true ? true : false;
   const handleVerifySeller = () => {
-    const userUid = eachSeller?.userUid;
-    fetch(`http://localhost:5000/verifyseller?userUid=${userUid}`, {
+    const sellerEmail = eachSeller?.email;
+    fetch(`http://localhost:5000/verifyseller?sellerEmail=${sellerEmail}`, {
       method: "POST",
     })
       .then((res) => res.json())

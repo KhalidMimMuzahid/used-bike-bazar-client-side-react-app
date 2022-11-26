@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const EachOrder = ({ eachOrder }) => {
+const EachItem = ({ eachitem }) => {
   const {
     askingPrice,
     bikeImage,
@@ -10,15 +9,15 @@ const EachOrder = ({ eachOrder }) => {
     brandNewPrice,
     category,
     engin,
+    paymentStatus,
+    sellingStatus,
     sellerEmail,
     sellerImage,
     sellerName,
     totalUsed,
-    meetingLocation,
-    soldDate,
-    postDate,
     _id,
-  } = eachOrder;
+    isReported,
+  } = eachitem;
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
@@ -30,18 +29,14 @@ const EachOrder = ({ eachOrder }) => {
             {bikeModel}
             <div className="badge badge-primary">{brandName}</div>
           </h2>
-          <p>Engin(CC): {engin}</p>
           <p>Category: {category}</p>
-          <p>
-            Brand New price: {brandNewPrice} <span className="text-xl">৳</span>
-          </p>
           <p>
             Asking price: {askingPrice} <span className="text-xl">৳</span>
           </p>
-          <p>post Date: {postDate}</p>
-          <p>Purchase Date: {soldDate}</p>
-          <p>Meeting Location: {meetingLocation}</p>
-          <h1>Seller Info:</h1>
+          <p>status: {sellingStatus}</p>
+          <p>post Date: {eachitem?.postDate}</p>
+          <p className="font-bold">{isReported && "reported"}</p>
+          <p>Seller Info:</p>
           <div className="flex items-center">
             <img
               src={sellerImage}
@@ -51,7 +46,7 @@ const EachOrder = ({ eachOrder }) => {
             />
             <h1>
               {sellerName}
-              {eachOrder?.sellerVerified && (
+              {eachitem?.sellerVerified && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -68,23 +63,9 @@ const EachOrder = ({ eachOrder }) => {
             </h1>
           </div>
         </div>
-        {/* <div className="card-actions justify-start">
-
-          <Link
-            className="btn btn-sm"
-            to={`/dashboard/myproducts/details/${_id}`}
-          >
-            details
-          </Link>
-          <button
-            className="block w-full btn btn-sm bg-red-700 text-white "
-          >
-            delete post
-          </button>
-        </div> */}
       </div>
     </div>
   );
 };
 
-export default EachOrder;
+export default EachItem;

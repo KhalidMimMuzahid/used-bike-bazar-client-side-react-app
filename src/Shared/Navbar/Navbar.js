@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import bikeLogo from "../../Assets/Logo/bike-logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
+import useRole from "../../hooks/useRole/useRole";
 const Navbar = () => {
   const { currentUser, logOut } = useContext(AuthContext);
-  // console.log(currentUser);
+  console.log(currentUser);
+  const [role, roleLoading] = useRole(currentUser?.uid);
   const handleSignOut = () => {
     logOut()
       .then(() => {
@@ -19,6 +21,12 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
+      {role === "buyer" && (
+        <li>
+          <Link to="/products/all">products</Link>
+        </li>
+      )}
+
       <li>
         <Link to="/blog">Blog</Link>
       </li>

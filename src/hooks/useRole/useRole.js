@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useRole = (userUid) => {
-  const [role, setRole] = useState("buyer");
+  const [role, setRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(true);
 
   useEffect(() => {

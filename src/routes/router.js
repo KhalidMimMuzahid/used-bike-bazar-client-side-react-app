@@ -42,10 +42,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />,
+        loader: async () => fetch("http://localhost:5000/catetories"),
+        element: (
+          <BuyerRoute>
+            <Products />
+          </BuyerRoute>
+        ),
         children: [
           {
-            path: "/products/",
+            path: "/products/:productCategory",
+            loader: ({ params }) => params.productCategory,
             element: <ProductsDisplay />,
           },
           {
@@ -125,6 +131,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/dashboard/reporteditems",
+            loader: async () => fetch("http://localhost:5000/reporteditems"),
             element: (
               <AdminRoute>
                 <ReportedItems />
