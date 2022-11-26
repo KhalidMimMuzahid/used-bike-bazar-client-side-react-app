@@ -12,6 +12,9 @@ import ProductDetails from "../Pages/DashBoard/MyProducts/ProductDetails/Product
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
+import Products from "../Pages/Products/Products";
+import ProductsDisplay from "../Pages/Products/ProductsDisplay/ProductsDisplay";
+import SelectedProductDetails from "../Pages/Products/SelectedProductDetails/SelectedProductDetails";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import AdminRoute from "./AdminRoute";
@@ -36,6 +39,22 @@ export const router = createBrowserRouter([
       {
         path: "/signin",
         element: <SignIn />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+        children: [
+          {
+            path: "/products/",
+            element: <ProductsDisplay />,
+          },
+          {
+            path: "/products/productdetails/:_id",
+            loader: async ({ params }) =>
+              fetch(`http://localhost:5000/productsdetails?_id=${params._id}`),
+            element: <SelectedProductDetails />,
+          },
+        ],
       },
       {
         path: "/dashboard",

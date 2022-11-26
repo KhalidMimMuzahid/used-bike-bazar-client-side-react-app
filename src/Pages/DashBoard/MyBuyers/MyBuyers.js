@@ -6,7 +6,11 @@ import EachBuyer from "./EachBuyer/EachBuyer";
 const MyBuyers = () => {
   const { currentUser } = useContext(AuthContext);
   const email = currentUser?.email;
-  const { data: myBuyers = [], refetch } = useQuery({
+  const {
+    data: myBuyers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["user", email],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/mybuyers?email=${email}`);
@@ -14,6 +18,9 @@ const MyBuyers = () => {
       return data;
     },
   });
+  if (myBuyers.length === 0) {
+    return <h1>Your product not sold yet... </h1>;
+  }
   return (
     <div>
       <div className="overflow-x-auto w-full">

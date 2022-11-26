@@ -1,47 +1,42 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../Context/AuthProvider";
-import EachAdvertisementProduct from "./EachAdvertisementProduct/EachAdvertisementProduct";
 
-const AdvertisedProducts = () => {
+const SelectedProductDetails = () => {
   const { currentUser } = useContext(AuthContext);
-  const { data: advertisedProducts = [], refetch } = useQuery({
-    queryKey: [],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:5000/advertisedproducts");
-      const data = await res.json();
-      return data;
-    },
-  });
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  //   const [modalIsOpen, setModalIsOpen] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+  const products = useLoaderData();
+  const {
+    askingPrice,
+    bikeImage,
+    bikeModel,
+    brandName,
+    brandNewPrice,
+    category,
+    engin,
+    paymentStatus,
+    sellingStatus,
+    sellerEmail,
+    sellerImage,
+    sellerName,
+    totalUsed,
+    postDate,
+    _id,
+  } = products;
+  const [isCurrentReported, setIsCurrentReported] = useState(
+    products?.isReported
+  );
   const handlePurchaseProduct = (data) => {
-    const {
-      askingPrice,
-      bikeImage,
-      bikeModel,
-      brandName,
-      brandNewPrice,
-      category,
-      engin,
-      paymentStatus,
-      sellingStatus,
-      sellerEmail,
-      sellerImage,
-      sellerName,
-      totalUsed,
-      postDate,
-      _id,
-    } = selectedProduct;
     const buyerImage = currentUser.photoURL;
-    // console.log(data);
     let date = new Date();
     let ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
     let mo = new Intl.DateTimeFormat("en", { month: "short" }).format(date);
@@ -78,36 +73,83 @@ const AdvertisedProducts = () => {
         if (data?.acknowledged) {
           toast.success(`${bikeModel} bought successfully`);
           reset();
-          setSelectedProduct(null);
-          return refetch();
+          return window.history.go(-1);
+        }
+        toast.error("something went wrong, please try again");
+      });
+  };
+  const handleReportToAdmin = () => {
+    fetch(`http://localhost:5000/reporttoadmin?_id=${_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.acknowledged) {
+          toast.success("successfully reported to admin");
+          return setIsCurrentReported(true);
         }
         toast.error("something went wrong, please try again");
       });
   };
   return (
     <>
-      {advertisedProducts.length !== 0 && (
-        <div className="my-12">
-          <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 gap-6 justify-center ">
-            {advertisedProducts?.map((eachProduct, i) => (
-              <EachAdvertisementProduct
-                key={i}
-                eachProduct={eachProduct}
-                refetch={refetch}
-                setSelectedProduct={setSelectedProduct}
+      <div className="card w-full px-12 md:px-36 lg:px-32 xl:px-48 bg-base-100 shadow-xl">
+        <figure>
+          <img src={bikeImage} alt="Shoes" />
+        </figure>
+        <div className="card-body">
+          <div>
+            <h2 className="card-title">
+              {bikeModel}
+              <div className="badge badge-primary">{brandName}</div>
+            </h2>
+            <p>Category: {category}</p>
+            <p>Engin (CC): {engin}</p>
+            <p>Used (total): {totalUsed} </p>
+            <p>
+              Brand New price: {brandNewPrice}{" "}
+              <span className="text-xl">৳</span>
+            </p>
+            <p>
+              Asking price: {askingPrice} <span className="text-xl">৳</span>
+            </p>
+            <p>
+              status:{" "}
+              {sellingStatus === "sold" ? "Stock Out" : "available products"}
+            </p>
+            {/* seller info  */}
+            <div className="flex items-center">
+              <img
+                src={sellerImage}
+                alt=""
+                className="rounded-full mr-2"
+                style={{ height: "30px", width: "30px" }}
               />
-            ))}
+              <h1>{sellerName}</h1>
+            </div>
+          </div>
+          <div className="card-actions justify-end">
+            <label
+              htmlFor="purchase-modal"
+              className="btn btn-sm bg-green-700 text-white"
+            >
+              purchase
+            </label>
+            <button
+              disabled={isCurrentReported}
+              onClick={handleReportToAdmin}
+              className=" btn btn-sm bg-red-700 text-white "
+            >
+              {isCurrentReported ? "reported" : "report to admin"}
+            </button>
           </div>
         </div>
-      )}
-
-      {selectedProduct && (
+      </div>
+      {
         <>
-          <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+          <input type="checkbox" id="purchase-modal" className="modal-toggle" />
           <div className="modal">
             <div className="modal-box relative">
               <label
-                htmlFor="my-modal-3"
+                htmlFor="purchase-modal"
                 className="btn btn-sm btn-circle absolute right-2 top-2"
               >
                 ✕
@@ -117,7 +159,7 @@ const AdvertisedProducts = () => {
                   <label className="input-group input-group-vertical my-1">
                     <span>Product Name</span>
                     <input
-                      defaultValue={selectedProduct?.bikeModel}
+                      defaultValue={bikeModel}
                       readOnly
                       type="text"
                       placeholder="Product Name"
@@ -128,7 +170,7 @@ const AdvertisedProducts = () => {
                     <span>Price</span>
                     <input
                       readOnly
-                      defaultValue={selectedProduct?.askingPrice}
+                      defaultValue={askingPrice}
                       type="text"
                       placeholder="Price"
                       className="input input-bordered  input-sm"
@@ -199,9 +241,9 @@ const AdvertisedProducts = () => {
             </div>
           </div>
         </>
-      )}
+      }
     </>
   );
 };
 
-export default AdvertisedProducts;
+export default SelectedProductDetails;

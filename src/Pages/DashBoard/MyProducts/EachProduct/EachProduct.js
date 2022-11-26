@@ -67,7 +67,9 @@ const EachProduct = ({ eachProduct, refetch }) => {
           <p>
             Asking price: {askingPrice} <span className="text-xl">৳</span>
           </p>
-          <div className="flex items-center">
+          <p>status: {sellingStatus}</p>
+          <p>post Date: {eachProduct?.postDate}</p>
+          {/* <div className="flex items-center">
             <img
               src={sellerImage}
               alt=""
@@ -75,7 +77,7 @@ const EachProduct = ({ eachProduct, refetch }) => {
               style={{ height: "30px", width: "30px" }}
             />
             <h1>{sellerName}</h1>
-          </div>
+          </div> */}
         </div>
         <div className="card-actions justify-start">
           <button
