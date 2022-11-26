@@ -12,7 +12,7 @@ const EachSeller = ({ index, eachSeller, refetch }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {
-          toast.success("this seller is verified");
+          toast.success("this   seller is verified");
           return refetch();
         }
       });
