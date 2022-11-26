@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { info } from "daisyui/src/colors";
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 
