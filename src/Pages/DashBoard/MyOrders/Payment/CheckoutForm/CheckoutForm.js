@@ -27,7 +27,6 @@ const CheckoutForm = ({ setPaymentError, askingPriceInt, product }) => {
 
     _id,
   } = product;
-  console.log("post_id", post_id, "buyerEmail  x", buyerEmail);
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
