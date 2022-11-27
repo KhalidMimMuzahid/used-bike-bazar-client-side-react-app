@@ -1,12 +1,14 @@
 import { async } from "@firebase/util";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main/Main";
+import Blogs from "../Pages/Blogs/Blogs";
 import AddProducts from "../Pages/DashBoard/AddProducts/AddProducts";
 import AllBuyers from "../Pages/DashBoard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/DashBoard/AllSellers/AllSellers";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import MyBuyers from "../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../Pages/DashBoard/MyOrders/MyOrders";
+import Payment from "../Pages/DashBoard/MyOrders/Payment/Payment";
 import MyProducts from "../Pages/DashBoard/MyProducts/MyProducts";
 import ProductDetails from "../Pages/DashBoard/MyProducts/ProductDetails/ProductDetails";
 import ReportedItems from "../Pages/DashBoard/ReportedItems/ReportedItems";
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/signin",
         element: <SignIn />,
+      },
+      {
+        path: "/blog",
+        element: <Blogs />,
       },
       {
         path: "/products",
@@ -75,6 +81,14 @@ export const router = createBrowserRouter([
             element: (
               <BuyerRoute>
                 <MyOrders />
+              </BuyerRoute>
+            ),
+          },
+          {
+            path: "/dashboard/payment",
+            element: (
+              <BuyerRoute>
+                <Payment />
               </BuyerRoute>
             ),
           },

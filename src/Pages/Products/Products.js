@@ -15,7 +15,7 @@ const Products = () => {
   return (
     <div className="drawer drawer-mobile ">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
+      <div className="drawer-content flex flex-col items-center ">
         {/* Page content here  */}
         <Outlet />
       </div>
@@ -31,6 +31,7 @@ const Products = () => {
               name="productCategory"
               defaultValue="all"
               className="select select-bordered select-sm"
+              style={{ backgroundColor: "transparent" }}
             >
               <option disabled selected>
                 Pick one
@@ -50,7 +51,10 @@ const Products = () => {
             <label className="label">
               <span className="label-text">select Bike Category</span>
             </label>
-            <select className="select select-bordered select-sm">
+            <select
+              className="select select-bordered select-sm "
+              style={{ backgroundColor: "transparent" }}
+            >
               <option disabled selected>
                 Pick one
               </option>

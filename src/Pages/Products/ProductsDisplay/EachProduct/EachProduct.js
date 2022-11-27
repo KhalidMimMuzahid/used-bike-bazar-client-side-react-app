@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EachAdvertisementProduct = ({
-  eachProduct,
-  refetch,
-  setSelectedProduct,
-}) => {
+const EachProduct = ({ eachProduct }) => {
   const {
     askingPrice,
     bikeImage,
@@ -20,12 +16,10 @@ const EachAdvertisementProduct = ({
     sellerImage,
     sellerName,
     totalUsed,
-    postDate,
     _id,
   } = eachProduct;
-  const handlePurchase = (_id) => {};
   return (
-    <div className="card w-92 bg-base-100 shadow-xl mx-auto">
+    <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
         <img src={bikeImage} alt="Shoes" />
       </figure>
@@ -37,12 +31,10 @@ const EachAdvertisementProduct = ({
           </h2>
           <p>Category: {category}</p>
           <p>
-            Asking price: {brandNewPrice} <span className="text-xl">৳</span>
+            Asking price: {askingPrice} <span className="text-xl">৳</span>
           </p>
-          {/* <p>
-          Brand new price  : {askingPrice} <span className="text-xl">৳</span>
-          </p> */}
-          <p>postDate: {postDate}</p>
+          <p>status: {sellingStatus}</p>
+          <p>post Date: {eachProduct?.postDate}</p>
           <div className="flex items-center">
             <img
               src={sellerImage}
@@ -70,13 +62,6 @@ const EachAdvertisementProduct = ({
           </div>
         </div>
         <div className="card-actions justify-start">
-          <label
-            onClick={() => setSelectedProduct(eachProduct)}
-            htmlFor="my-modal-3"
-            className="btn btn-sm bg-green-700 text-white"
-          >
-            book
-          </label>
           <Link className="btn btn-sm" to={`/products/productdetails/${_id}`}>
             details
           </Link>
@@ -86,4 +71,4 @@ const EachAdvertisementProduct = ({
   );
 };
 
-export default EachAdvertisementProduct;
+export default EachProduct;

@@ -1,12 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { info } from "daisyui/src/colors";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const EachAdvertisementProduct = ({
-  eachProduct,
-  refetch,
-  setSelectedProduct,
-}) => {
+const Payment = () => {
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    fetch(`http://localhost:5000/soldproductdetails?_id=${location?.state}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setIsLoading(false);
+      });
+  }, [location?.state]);
+  if (isLoading) {
+    return;
+  }
   const {
+    post_id,
     askingPrice,
     bikeImage,
     bikeModel,
@@ -14,18 +26,17 @@ const EachAdvertisementProduct = ({
     brandNewPrice,
     category,
     engin,
-    paymentStatus,
-    sellingStatus,
     sellerEmail,
     sellerImage,
     sellerName,
     totalUsed,
+    meetingLocation,
+    soldDate,
     postDate,
     _id,
-  } = eachProduct;
-  const handlePurchase = (_id) => {};
+  } = product;
   return (
-    <div className="card w-92 bg-base-100 shadow-xl mx-auto">
+    <div className="card w-76 bg-base-100 shadow-xl">
       <figure>
         <img src={bikeImage} alt="Shoes" />
       </figure>
@@ -35,15 +46,17 @@ const EachAdvertisementProduct = ({
             {bikeModel}
             <div className="badge badge-primary">{brandName}</div>
           </h2>
+          <p>Engin(CC): {engin}</p>
           <p>Category: {category}</p>
           <p>
-            Asking price: {brandNewPrice} <span className="text-xl">৳</span>
+            Brand New price: {brandNewPrice} <span className="text-xl">৳</span>
           </p>
-          {/* <p>
-          Brand new price  : {askingPrice} <span className="text-xl">৳</span>
-          </p> */}
-          <p>postDate: {postDate}</p>
-          <div className="flex items-center">
+          <p>
+            Asking price: {askingPrice} <span className="text-xl">৳</span>
+          </p>
+          {/* <h1>Seller Info:</h1> */}
+
+          {/* <div className="flex items-center">
             <img
               src={sellerImage}
               alt=""
@@ -51,8 +64,8 @@ const EachAdvertisementProduct = ({
               style={{ height: "30px", width: "30px" }}
             />
             <h1>
-              {sellerName}{" "}
-              {eachProduct?.sellerVerified && (
+              {sellerName}
+              {product?.sellerVerified && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -67,23 +80,16 @@ const EachAdvertisementProduct = ({
                 </svg>
               )}
             </h1>
-          </div>
+          </div> */}
         </div>
         <div className="card-actions justify-start">
-          <label
-            onClick={() => setSelectedProduct(eachProduct)}
-            htmlFor="my-modal-3"
-            className="btn btn-sm bg-green-700 text-white"
-          >
-            book
-          </label>
-          <Link className="btn btn-sm" to={`/products/productdetails/${_id}`}>
-            details
-          </Link>
+          <h1>Product Id: {post_id}</h1>
+          <p>are you sure to pay for {bikeModel}</p>
+          <button className="btn block w-full">pay now</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default EachAdvertisementProduct;
+export default Payment;

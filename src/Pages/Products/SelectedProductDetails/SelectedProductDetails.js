@@ -144,10 +144,11 @@ const SelectedProductDetails = () => {
           </div>
           <div className="card-actions justify-end">
             <label
+              disabled={sellingStatus === "sold"}
               htmlFor="purchase-modal"
               className="btn btn-sm bg-green-700 text-white"
             >
-              purchase
+              {sellingStatus === "sold" ? "Stock Out" : "book"}
             </label>
             <button
               disabled={isCurrentReported}

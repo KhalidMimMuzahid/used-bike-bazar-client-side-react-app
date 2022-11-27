@@ -19,6 +19,7 @@ const EachOrder = ({ eachOrder }) => {
     postDate,
     _id,
   } = eachOrder;
+  // console.log(eachOrder);
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
@@ -68,20 +69,21 @@ const EachOrder = ({ eachOrder }) => {
             </h1>
           </div>
         </div>
-        {/* <div className="card-actions justify-start">
-
-          <Link
+        <div className="card-actions justify-start">
+          {/* <Link
             className="btn btn-sm"
             to={`/dashboard/myproducts/details/${_id}`}
           >
             details
-          </Link>
-          <button
-            className="block w-full btn btn-sm bg-red-700 text-white "
-          >
-            delete post
-          </button>
-        </div> */}
+          </Link> */}
+          {eachOrder?.paymentStatus === "paid" || (
+            <Link to="/dashboard/payment" state={_id}>
+              <button className="block w-full btn btn-sm bg-green-700 text-white ">
+                {eachOrder?.paymentStatus === "paid" ? "paid" : "pay!"}
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
