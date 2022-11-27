@@ -1,8 +1,13 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { info } from "daisyui/src/colors";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import CheckoutForm from "./CheckoutForm/CheckoutForm";
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
+// console.log("key", stripePromise);
 const Payment = () => {
+  const [paymentError, setPaymentError] = useState("");
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState({});
@@ -15,7 +20,7 @@ const Payment = () => {
       });
   }, [location?.state]);
   if (isLoading) {
-    return;
+    return <h1>loading</h1>;
   }
   const {
     post_id,
@@ -35,28 +40,31 @@ const Payment = () => {
     postDate,
     _id,
   } = product;
+
+  const askingPriceInt = parseInt(askingPrice);
   return (
-    <div className="card w-76 bg-base-100 shadow-xl">
-      <figure>
+    <div className="w-full">
+      <div className="card  mx-4 md:mx-20 lg:mx-24 xl:mx-36 2xl:mx-48 bg-base-100 shadow-xl">
+        {/* <figure>
         <img src={bikeImage} alt="Shoes" />
-      </figure>
-      <div className="card-body">
-        <div>
-          <h2 className="card-title">
-            {bikeModel}
-            <div className="badge badge-primary">{brandName}</div>
-          </h2>
-          <p>Engin(CC): {engin}</p>
-          <p>Category: {category}</p>
+      </figure> */}
+        <div className="card-body">
+          <div>
+            <h2 className="card-title">
+              {bikeModel}
+              <div className="badge badge-primary">{brandName}</div>
+            </h2>
+            {/* <p>Engin(CC): {engin}</p> */}
+            {/* <p>Category: {category}</p>
           <p>
             Brand New price: {brandNewPrice} <span className="text-xl">৳</span>
-          </p>
-          <p>
-            Asking price: {askingPrice} <span className="text-xl">৳</span>
-          </p>
-          {/* <h1>Seller Info:</h1> */}
+          </p> */}
+            <p>
+              price: {askingPrice} <span className="text-xl">৳</span>
+            </p>
+            {/* <h1>Seller Info:</h1> */}
 
-          {/* <div className="flex items-center">
+            {/* <div className="flex items-center">
             <img
               src={sellerImage}
               alt=""
@@ -81,11 +89,22 @@ const Payment = () => {
               )}
             </h1>
           </div> */}
-        </div>
-        <div className="card-actions justify-start">
+          </div>
+          {/* <div className="card-actions justify-start">
           <h1>Product Id: {post_id}</h1>
           <p>are you sure to pay for {bikeModel}</p>
           <button className="btn block w-full">pay now</button>
+        </div> */}
+          <div className="m-4">
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                product={product}
+                setPaymentError={setPaymentError}
+                askingPriceInt={askingPriceInt}
+              />
+            </Elements>
+          </div>
+          {paymentError && <h1 className="text-red-700">{paymentError}</h1>}
         </div>
       </div>
     </div>

@@ -76,13 +76,14 @@ const EachOrder = ({ eachOrder }) => {
           >
             details
           </Link> */}
-          {eachOrder?.paymentStatus === "paid" || (
-            <Link to="/dashboard/payment" state={_id}>
-              <button className="block w-full btn btn-sm bg-green-700 text-white ">
-                {eachOrder?.paymentStatus === "paid" ? "paid" : "pay!"}
-              </button>
-            </Link>
-          )}
+          <Link to="/dashboard/payment" state={_id}>
+            <button
+              disabled={eachOrder?.paymentStatus === "paid"}
+              className="block w-full btn btn-sm bg-green-700 text-white "
+            >
+              {eachOrder?.paymentStatus === "paid" ? "paid" : "pay!"}
+            </button>
+          </Link>
         </div>
       </div>
     </div>
