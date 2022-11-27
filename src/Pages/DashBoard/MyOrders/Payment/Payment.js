@@ -85,7 +85,7 @@ const Payment = () => {
         <div className="card-actions justify-start">
           <h1>Product Id: {post_id}</h1>
           <p>are you sure to pay for {bikeModel}</p>
-          <button className="btn block w-full">pay .now</button>
+          <button className="btn block w-full">pay now</button>
         </div>
       </div>
     </div>
