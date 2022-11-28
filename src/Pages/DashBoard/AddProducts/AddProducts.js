@@ -5,7 +5,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 
 const AddProducts = () => {
   const imageHostKey = process.env.REACT_APP_imagebb_key;
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logOut } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -68,10 +68,23 @@ const AddProducts = () => {
             method: "POST",
             headers: {
               "content-type": "application/json",
+              authorization: `Barerer ${localStorage.getItem("accessToken")}`,
             },
             body: JSON.stringify(postInfo),
           })
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.satus === 401 || res.status === 403) {
+                logOut()
+                  .then(() => {
+                    localStorage.removeItem("accessToken");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+                return;
+              }
+              return res.json();
+            })
             .then((data) => {
               if (data?.acknowledged) {
                 toast.success("your product is posted succesfully");

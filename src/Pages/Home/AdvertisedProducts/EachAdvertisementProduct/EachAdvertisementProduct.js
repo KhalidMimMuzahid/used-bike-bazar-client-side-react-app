@@ -1,11 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../../../Context/AuthProvider";
 
 const EachAdvertisementProduct = ({
   eachProduct,
   refetch,
   setSelectedProduct,
 }) => {
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     askingPrice,
     bikeImage,
@@ -23,7 +27,21 @@ const EachAdvertisementProduct = ({
     postDate,
     _id,
   } = eachProduct;
-  const handlePurchase = (_id) => {};
+  const handlePurchase = () => {
+    if (!currentUser?.uid) {
+      toast.error("you are not an user, please sign In");
+      return navigate("/signin");
+    }
+    setSelectedProduct(eachProduct);
+  };
+  // to={`/products/productdetails/${_id}`}
+  const handlePostDetails = () => {
+    if (currentUser?.uid) {
+      return navigate(`/products/productdetails/${_id}`);
+    }
+    toast.error("please login first");
+    return navigate("/signin");
+  };
   return (
     <div className="card w-92 bg-base-100 shadow-xl mx-auto">
       <figure>
@@ -71,15 +89,15 @@ const EachAdvertisementProduct = ({
         </div>
         <div className="card-actions justify-start">
           <label
-            onClick={() => setSelectedProduct(eachProduct)}
+            onClick={handlePurchase}
             htmlFor="my-modal-3"
             className="btn btn-sm bg-green-700 text-white"
           >
             book
           </label>
-          <Link className="btn btn-sm" to={`/products/productdetails/${_id}`}>
+          <button className="btn btn-sm" onClick={handlePostDetails}>
             details
-          </Link>
+          </button>
         </div>
       </div>
     </div>

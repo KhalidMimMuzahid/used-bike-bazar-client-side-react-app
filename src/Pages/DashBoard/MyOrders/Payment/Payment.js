@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { info } from "daisyui/src/colors";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Loader from "../../../../Component/Loader/Loader";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 // console.log("key", stripePromise);
@@ -20,7 +21,7 @@ const Payment = () => {
       });
   }, [location?.state]);
   if (isLoading) {
-    return <h1>loading</h1>;
+    return <Loader />;
   }
   const {
     post_id,

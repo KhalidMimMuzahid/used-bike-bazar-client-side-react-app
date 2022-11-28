@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import Loader from "../../../Component/Loader/Loader";
 import EachProduct from "./EachProduct/EachProduct";
 
 const ProductsDisplay = () => {
@@ -22,8 +23,9 @@ const ProductsDisplay = () => {
     },
   });
   if (isLoading) {
-    return <h1>loading</h1>;
+    return <Loader />;
   }
+  console.log("products", products);
   return (
     <div className="">
       {products?.length === 0 && (

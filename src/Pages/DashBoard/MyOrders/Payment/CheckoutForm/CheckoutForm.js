@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 import React, { useEffect, useState } from "react";
+import Progresser from "../../../../../Component/Progresser/Progresser";
 
 const CheckoutForm = ({ setPaymentError, askingPriceInt, product }) => {
   const [paymentStatus, setPaymentStatus] = useState("");
@@ -150,7 +151,7 @@ const CheckoutForm = ({ setPaymentError, askingPriceInt, product }) => {
       )}
       {isProgress && (
         <div>
-          <h1 className="text-2xl">progressing......</h1>
+          <Progresser />
         </div>
       )}
     </>

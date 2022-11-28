@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import Loader from "../Component/Loader/Loader";
 import { AuthContext } from "../Context/AuthProvider";
 import useRole from "../hooks/useRole/useRole";
 
@@ -10,7 +11,7 @@ const AdminRoute = ({ children }) => {
   const [role, roleLoading] = useRole(currentUser?.uid);
   console.log(role);
   if (isLoading || roleLoading) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
   if (currentUser?.uid && role === "admin") {
     return children;

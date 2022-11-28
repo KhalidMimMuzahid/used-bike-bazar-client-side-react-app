@@ -17,8 +17,9 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [useRoleRefreshwithToggle, setUseRoleRefreshwithToggle] =
+    useState(false);
   const createUserwithPassword = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -32,7 +33,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (info) => {
-    setIsLoading(true);
     return updateProfile(auth.currentUser, info);
   };
 
@@ -50,9 +50,7 @@ const AuthProvider = ({ children }) => {
     });
     return () => unSubscribe();
   }, []);
-  const okk = {
-    okk: "okk",
-  };
+
   const authInfo = {
     createUserwithPassword,
     signIn,
@@ -62,7 +60,8 @@ const AuthProvider = ({ children }) => {
     isLoading,
     googleSignIn,
     resetPassword,
-    okk,
+    useRoleRefreshwithToggle,
+    setUseRoleRefreshwithToggle,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

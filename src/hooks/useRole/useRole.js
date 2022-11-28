@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 
-const useRole = (userUid) => {
+const useRole = (userUid, useRoleRefreshwithToggle = false) => {
+  // console.log("useruid", userUid, "roletoggle", useRoleRefreshwithToggle);
+  console.log("useruid inside useRole ==", userUid);
   const [role, setRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(true);
+  const [roleLoadingForUnSigned, setRoleLoadingForUnSigned] = useState(true);
 
   useEffect(() => {
     if (userUid) {
@@ -12,8 +15,12 @@ const useRole = (userUid) => {
           setRole(data?.role);
           setRoleLoading(false);
         });
+    } else {
+      setRole(null);
     }
-  }, [userUid]);
-  return [role, roleLoading];
+    setRoleLoadingForUnSigned(false);
+  }, [userUid, useRoleRefreshwithToggle]);
+  console.log("role inside token ==", role);
+  return [role, roleLoading, roleLoadingForUnSigned];
 };
 export default useRole;

@@ -17,6 +17,7 @@ const AdvertisedProducts = () => {
       return data;
     },
   });
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const {
     register,
@@ -86,13 +87,16 @@ const AdvertisedProducts = () => {
         toast.error("something went wrong, please try again");
       });
   };
-  const [role, roleLoading] = useRole(currentUser?.uid);
-  if (roleLoading) {
+  const [role, roleLoading, roleLoadingForUnSigned] = useRole(currentUser?.uid);
+  console.log("advertisedProducts", advertisedProducts);
+  console.log("role", role);
+  console.log("roleLoading", roleLoading);
+  if (roleLoadingForUnSigned) {
     return;
   }
   return (
     <>
-      {advertisedProducts.length !== 0 && role === "buyer" && (
+      {advertisedProducts.length !== 0 && (role === "buyer" || role == null) && (
         <div className="my-12">
           <h1 className="font-bold text-2xl text-center mb-6">
             Advertised Items

@@ -4,12 +4,21 @@ import bikeLogo from "../../Assets/Logo/bike-logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
 import useRole from "../../hooks/useRole/useRole";
 const Navbar = () => {
-  const { currentUser, logOut } = useContext(AuthContext);
-  console.log(currentUser);
-  const [role, roleLoading] = useRole(currentUser?.uid);
+  const {
+    currentUser,
+    logOut,
+    useRoleRefreshwithToggle,
+    setUseRoleRefreshwithToggle,
+  } = useContext(AuthContext);
+  const [role, roleLoading] = useRole(
+    currentUser?.uid,
+    useRoleRefreshwithToggle
+  );
+  console.log("role", role);
   const handleSignOut = () => {
     logOut()
       .then(() => {
+        setUseRoleRefreshwithToggle(!useRoleRefreshwithToggle);
         localStorage.removeItem("accessToken");
       })
       .catch((error) => {
@@ -62,7 +71,7 @@ const Navbar = () => {
             {navElement}
           </ul>
         </div>
-        <Link className="h-9">
+        <Link to="/" className="h-9">
           <img className="h-full" src={bikeLogo} alt="" />
         </Link>
       </div>

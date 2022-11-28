@@ -21,7 +21,7 @@ const EachProduct = ({ eachProduct }) => {
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
-        <img src={bikeImage} alt="Shoes" />
+        <img src={bikeImage} alt={bikeModel} />
       </figure>
       <div className="card-body">
         <div>
@@ -63,7 +63,7 @@ const EachProduct = ({ eachProduct }) => {
         </div>
         <div className="card-actions justify-start">
           <Link className="btn btn-sm" to={`/products/productdetails/${_id}`}>
-            details
+            details xxxxx
           </Link>
         </div>
       </div>

@@ -4,13 +4,19 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Progresser from "../../Component/Progresser/Progresser";
 import { AuthContext } from "../../Context/AuthProvider";
 import useToken from "../../hooks/useToken/useToken";
 import handleGoogleSignIn from "../../Utilities/handleGoogleSignIn";
 
 const SignUp = () => {
-  const { createUserwithPassword, updateUser, googleSignIn } =
-    useContext(AuthContext);
+  const {
+    createUserwithPassword,
+    updateUser,
+    googleSignIn,
+    useRoleRefreshwithToggle,
+    setUseRoleRefreshwithToggle,
+  } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -20,11 +26,14 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [signUpError, setSignUpError] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  const [isProgressing, setIsProgressing] = useState(false);
   const [token] = useToken(currentUser);
   if (token) {
+    setUseRoleRefreshwithToggle(!useRoleRefreshwithToggle);
     navigate("/");
   }
   const handleSignUp = (data) => {
+    setIsProgressing(true);
     setSignUpError("");
     createUserwithPassword(data.email, data.password)
       .then((userCredential) => {
@@ -75,14 +84,18 @@ const SignUp = () => {
                     .then((res) => res.json())
                     .then((data) => {
                       if (data.acknowledged) {
+                        setIsProgressing(false);
+
                         toast.success("profile signed up successfully");
+
                         setCurrentUser(user.email);
                       }
                     });
                 })
                 .catch((error) => {
                   // An error occurred
-                  // ...
+                  // ...(false)
+                  setIsProgressing(false);
                   setSignUpError(error);
                 });
             }
@@ -93,6 +106,7 @@ const SignUp = () => {
         const errorMessage = error.message;
         setSignUpError(errorMessage);
         // ..
+        setIsProgressing(false);
       });
   };
 
@@ -198,7 +212,29 @@ const SignUp = () => {
             value="SignUp"
             type="submit"
           />
+          {
+            <>
+              {isProgressing && (
+                <>
+                  <Progresser />
+                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                      {/*content*/}
+
+                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {" "}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black">
+                    {" "}
+                  </div>
+                </>
+              )}
+            </>
+          }
         </form>
+
         <p>
           already have an account?{" "}
           <Link to="/signin" className="text-secondary  font-bold">

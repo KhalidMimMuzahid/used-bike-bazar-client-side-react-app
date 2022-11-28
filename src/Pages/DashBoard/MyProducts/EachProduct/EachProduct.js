@@ -95,10 +95,11 @@ const EachProduct = ({ eachProduct, refetch }) => {
             details
           </Link>
           <button
+            disabled={sellingStatus === "sold"}
             onClick={() => handleDeletPost(_id)}
             className="block w-full btn btn-sm bg-red-700 text-white "
           >
-            delete post
+            {sellingStatus === "sold" ? "cant't be deleted" : "delete post"}
           </button>
         </div>
       </div>

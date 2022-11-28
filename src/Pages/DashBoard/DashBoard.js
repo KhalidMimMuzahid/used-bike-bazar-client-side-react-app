@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import Loader from "../../Component/Loader/Loader";
 import { AuthContext } from "../../Context/AuthProvider";
 import useRole from "../../hooks/useRole/useRole";
 
@@ -7,7 +8,7 @@ const DashBoard = () => {
   const { currentUser } = useContext(AuthContext);
   const [role, roleLoading] = useRole(currentUser?.uid);
   if (roleLoading) {
-    return <h1>loading</h1>;
+    return <Loader></Loader>;
   }
   return (
     <div className="drawer drawer-mobile">
