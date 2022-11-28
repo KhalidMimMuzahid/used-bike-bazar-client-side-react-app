@@ -15,7 +15,7 @@ const handleGoogleSignIn = (setLoginError, googleSignIn, setCUrrentUser) => {
         userUid: user?.uid,
         role: "buyer",
       };
-      fetch("http://localhost:5000/user", {
+      fetch("https://used-bike-bazar-server.vercel.app/user", {
         method: "POST",
         headers: {
           "content-type": "application/json",

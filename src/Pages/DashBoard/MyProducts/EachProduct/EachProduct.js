@@ -28,7 +28,7 @@ const EachProduct = ({ eachProduct, refetch }) => {
       return;
     }
     console.log(_id);
-    fetch(`http://localhost:5000/delete?_id=${_id}`, {
+    fetch(`https://used-bike-bazar-server.vercel.app/delete?_id=${_id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -40,9 +40,12 @@ const EachProduct = ({ eachProduct, refetch }) => {
       });
   };
   const handleAdvertisePost = (_id) => {
-    fetch(`http://localhost:5000/makeadvertisement?_id=${_id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://used-bike-bazar-server.vercel.app/makeadvertisement?_id=${_id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {

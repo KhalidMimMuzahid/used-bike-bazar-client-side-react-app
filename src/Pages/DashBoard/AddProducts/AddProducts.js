@@ -64,7 +64,7 @@ const AddProducts = () => {
             paymentStatus: "unpaid",
             sellingStatus: "unsold",
           };
-          fetch("http://localhost:5000/addproduct", {
+          fetch("https://used-bike-bazar-server.vercel.app/addproduct", {
             method: "POST",
             headers: {
               "content-type": "application/json",

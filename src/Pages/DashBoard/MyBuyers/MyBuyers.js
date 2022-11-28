@@ -15,11 +15,14 @@ const MyBuyers = () => {
   } = useQuery({
     queryKey: ["user", email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/mybuyers?email=${email}`, {
-        headers: {
-          authorization: `Barerer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const res = await fetch(
+        `https://used-bike-bazar-server.vercel.app/mybuyers?email=${email}`,
+        {
+          headers: {
+            authorization: `Barerer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       if (res.satus === 401 || res.status === 403) {
         logOut()
           .then(() => {

@@ -9,7 +9,7 @@ const useRole = (userUid, useRoleRefreshwithToggle = false) => {
 
   useEffect(() => {
     if (userUid) {
-      fetch(`http://localhost:5000/role?userUid=${userUid}`)
+      fetch(`https://used-bike-bazar-server.vercel.app/role?userUid=${userUid}`)
         .then((res) => res.json())
         .then((data) => {
           setRole(data?.role);

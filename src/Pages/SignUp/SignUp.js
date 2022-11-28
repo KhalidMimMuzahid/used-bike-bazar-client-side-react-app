@@ -74,7 +74,7 @@ const SignUp = () => {
                     userUid: user?.uid,
                     role: data?.role,
                   };
-                  fetch("http://localhost:5000/user", {
+                  fetch("https://used-bike-bazar-server.vercel.app/user", {
                     method: "POST",
                     headers: {
                       "content-type": "application/json",

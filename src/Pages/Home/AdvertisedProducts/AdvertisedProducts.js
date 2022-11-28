@@ -12,7 +12,9 @@ const AdvertisedProducts = () => {
   const { data: advertisedProducts = [], refetch } = useQuery({
     queryKey: [],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/advertisedproducts");
+      const res = await fetch(
+        "https://used-bike-bazar-server.vercel.app/advertisedproducts"
+      );
       const data = await res.json();
       return data;
     },
@@ -69,7 +71,7 @@ const AdvertisedProducts = () => {
       post_id: _id,
     };
     // console.log("soldProductInfo", soldProductInfo);
-    fetch("http://localhost:5000/buyproduct", {
+    fetch("https://used-bike-bazar-server.vercel.app/buyproduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",

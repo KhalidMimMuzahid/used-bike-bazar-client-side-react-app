@@ -13,7 +13,9 @@ const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:5000/soldproductdetails?_id=${location?.state}`)
+    fetch(
+      `https://used-bike-bazar-server.vercel.app/soldproductdetails?_id=${location?.state}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);

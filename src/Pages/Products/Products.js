@@ -47,7 +47,7 @@ const Products = () => {
               ))}
             </select>
           </div>
-          <div className="form-control w-full max-w-xs">
+          {/* <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">select Bike Category</span>
             </label>
@@ -64,7 +64,7 @@ const Products = () => {
               <option>Planet of the Apes</option>
               <option>Star Trek</option>
             </select>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

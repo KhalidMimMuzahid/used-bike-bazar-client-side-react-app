@@ -9,7 +9,9 @@ const MyOrders = () => {
   const { data: myorders = [], refetch } = useQuery({
     queryKey: ["user", email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/myorders?email=${email}`);
+      const res = await fetch(
+        `https://used-bike-bazar-server.vercel.app/myorders?email=${email}`
+      );
       const data = await res.json();
       return data;
     },

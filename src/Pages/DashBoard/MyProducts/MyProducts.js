@@ -16,7 +16,7 @@ const MyProducts = () => {
     queryKey: ["user", email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/myproducts?email=${email}`,
+        `https://used-bike-bazar-server.vercel.app/myproducts?email=${email}`,
         {
           headers: {
             authorization: `Barerer ${localStorage.getItem("accessToken")}`,

@@ -63,7 +63,7 @@ const EachProduct = ({ eachProduct }) => {
         </div>
         <div className="card-actions justify-start">
           <Link className="btn btn-sm" to={`/products/productdetails/${_id}`}>
-            details xxxxx
+            details
           </Link>
         </div>
       </div>

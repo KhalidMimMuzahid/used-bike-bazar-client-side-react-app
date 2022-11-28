@@ -61,7 +61,7 @@ const SelectedProductDetails = () => {
       post_id: _id,
     };
     // console.log("soldProductInfo", soldProductInfo);
-    fetch("http://localhost:5000/buyproduct", {
+    fetch("https://used-bike-bazar-server.vercel.app/buyproduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -79,7 +79,7 @@ const SelectedProductDetails = () => {
       });
   };
   const handleReportToAdmin = () => {
-    fetch(`http://localhost:5000/reporttoadmin?_id=${_id}`)
+    fetch(`https://used-bike-bazar-server.vercel.app/reporttoadmin?_id=${_id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {

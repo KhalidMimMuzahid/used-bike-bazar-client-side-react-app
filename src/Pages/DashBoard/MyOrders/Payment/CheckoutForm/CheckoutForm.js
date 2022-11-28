@@ -77,7 +77,7 @@ const CheckoutForm = ({ setPaymentError, askingPriceInt, product }) => {
     if (paymentIntent) {
       // TODO: update database for change payment status  post_id paymentIntent?.id
       fetch(
-        `http://localhost:5000/setpaymentstatus?post_id=${post_id}&paymentId=${paymentIntent?.id}`,
+        `https://used-bike-bazar-server.vercel.app/setpaymentstatus?post_id=${post_id}&paymentId=${paymentIntent?.id}`,
         { method: "POST" }
       )
         .then((res) => res.json())
@@ -95,7 +95,7 @@ const CheckoutForm = ({ setPaymentError, askingPriceInt, product }) => {
   };
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://used-bike-bazar-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: askingPriceInt }),

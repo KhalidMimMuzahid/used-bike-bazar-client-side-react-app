@@ -48,7 +48,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        loader: async () => fetch("http://localhost:5000/catetories"),
+        loader: async () =>
+          fetch("https://used-bike-bazar-server.vercel.app/catetories"),
         element: (
           <BuyerRoute>
             <Products />
@@ -63,7 +64,9 @@ export const router = createBrowserRouter([
           {
             path: "/products/productdetails/:_id",
             loader: async ({ params }) =>
-              fetch(`http://localhost:5000/productsdetails?_id=${params._id}`),
+              fetch(
+                `https://used-bike-bazar-server.vercel.app/productsdetails?_id=${params._id}`
+              ),
             element: <SelectedProductDetails />,
           },
         ],
@@ -120,7 +123,9 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/myproducts/details/:_id",
             loader: async ({ params }) =>
-              fetch(`http://localhost:5000/productsdetails?_id=${params._id}`),
+              fetch(
+                `https://used-bike-bazar-server.vercel.app/productsdetails?_id=${params._id}`
+              ),
             element: (
               <SellerRoute>
                 <ProductDetails />
@@ -145,7 +150,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "/dashboard/reporteditems",
-            loader: async () => fetch("http://localhost:5000/reporteditems"),
+            loader: async () =>
+              fetch("https://used-bike-bazar-server.vercel.app/reporteditems"),
             element: (
               <AdminRoute>
                 <ReportedItems />

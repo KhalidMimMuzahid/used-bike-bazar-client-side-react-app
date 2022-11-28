@@ -23,7 +23,7 @@ const ProductDetails = () => {
   } = products;
   const handleDeletPost = (_id) => {
     console.log(_id);
-    fetch(`http://localhost:5000/delete?_id=${_id}`, {
+    fetch(`https://used-bike-bazar-server.vercel.app/delete?_id=${_id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

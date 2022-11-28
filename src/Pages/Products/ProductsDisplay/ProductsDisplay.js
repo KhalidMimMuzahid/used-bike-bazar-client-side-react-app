@@ -16,7 +16,7 @@ const ProductsDisplay = () => {
     queryKey: [productCategory],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/productsbycategory?categoryName=${productCategory}`
+        `https://used-bike-bazar-server.vercel.app/productsbycategory?categoryName=${productCategory}`
       );
       const data = await res.json();
       return data;

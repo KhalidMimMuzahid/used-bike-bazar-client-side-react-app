@@ -6,9 +6,12 @@ const EachSeller = ({ index, eachSeller, refetch }) => {
   const isVerified = eachSeller?.isVerified === true ? true : false;
   const handleVerifySeller = () => {
     const sellerEmail = eachSeller?.email;
-    fetch(`http://localhost:5000/verifyseller?sellerEmail=${sellerEmail}`, {
-      method: "POST",
-    })
+    fetch(
+      `https://used-bike-bazar-server.vercel.app/verifyseller?sellerEmail=${sellerEmail}`,
+      {
+        method: "POST",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {

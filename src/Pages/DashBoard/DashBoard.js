@@ -39,11 +39,11 @@ const DashBoard = () => {
               <li>
                 <Link to="/dashboard/myproducts">My Products</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/dashboard/soldproducts">
                   sold Products(optional)
                 </Link>
-              </li>
+              </li> */}
               {/* my buyers is optional */}
               <li>
                 <Link to="/dashboard/mybuyers">My buyers</Link>

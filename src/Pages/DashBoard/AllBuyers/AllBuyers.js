@@ -6,7 +6,9 @@ const AllBuyers = () => {
   const { data: allBuyers = [], refetch } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/allbuyers`);
+      const res = await fetch(
+        `https://used-bike-bazar-server.vercel.app/allbuyers`
+      );
       const data = await res.json();
       return data;
     },
