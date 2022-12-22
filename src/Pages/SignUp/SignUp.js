@@ -43,7 +43,7 @@ const SignUp = () => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append("image", image);
-        // console.log("user", user, "\n", data.image[0]);
+        // console.log("user   :", user, "\n", data.image[0]);
         const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
         fetch(url, {
           method: "POST",
