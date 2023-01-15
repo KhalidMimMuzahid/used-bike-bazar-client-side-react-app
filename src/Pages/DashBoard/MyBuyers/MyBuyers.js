@@ -34,6 +34,7 @@ const MyBuyers = () => {
         return;
       }
       const data = await res.json();
+      console.log("data:", data);
       return data;
     },
   });
@@ -56,7 +57,11 @@ const MyBuyers = () => {
           </thead>
           <tbody>
             {myBuyers.map((eachBuyer, index) => (
-              <EachBuyer key={index} index={index} eachBuyer={eachBuyer} />
+              <EachBuyer
+                key={eachBuyer?._id}
+                index={index}
+                eachBuyer={eachBuyer}
+              />
             ))}
           </tbody>
         </table>

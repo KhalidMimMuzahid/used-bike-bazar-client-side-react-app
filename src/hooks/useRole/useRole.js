@@ -14,11 +14,12 @@ const useRole = (userUid, useRoleRefreshwithToggle = false) => {
         .then((data) => {
           setRole(data?.role);
           setRoleLoading(false);
+          setRoleLoadingForUnSigned(false);
         });
     } else {
       setRole(null);
+      setRoleLoadingForUnSigned(false);
     }
-    setRoleLoadingForUnSigned(false);
   }, [userUid, useRoleRefreshwithToggle]);
   console.log("role inside token ==", role);
   return [role, roleLoading, roleLoadingForUnSigned];

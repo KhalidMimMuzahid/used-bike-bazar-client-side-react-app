@@ -58,9 +58,9 @@ const EachProduct = ({ eachProduct, refetch }) => {
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
-        <img src={bikeImage} alt="Shoes" />
+        <img className="max-h-[300px]" src={bikeImage} alt={bikeModel} />
       </figure>
-      <div className="card-body">
+      <div className="card-body grow justify-end">
         <div>
           <h2 className="card-title">
             {bikeModel}
@@ -86,13 +86,13 @@ const EachProduct = ({ eachProduct, refetch }) => {
           <button
             disabled={eachProduct?.isAdvertise || sellingStatus === "sold"}
             onClick={() => handleAdvertisePost(_id)}
-            className="btn btn-sm bg-green-700 text-white "
+            className="btn btn-sm bg-green-700 text-white grow"
           >
             {eachProduct?.isAdvertise ? "Advertised" : "Advertise"}
           </button>
 
           <Link
-            className="btn btn-sm"
+            className="btn btn-sm grow"
             to={`/dashboard/myproducts/details/${_id}`}
           >
             details

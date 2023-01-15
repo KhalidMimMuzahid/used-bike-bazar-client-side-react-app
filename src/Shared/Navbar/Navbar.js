@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import bikeLogo from "../../Assets/Logo/bike-logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
 import useRole from "../../hooks/useRole/useRole";
-const Navbar = () => {
+const Navbar = ({ setThemeIsDark, themeIsDark }) => {
   const {
     currentUser,
     logOut,
@@ -15,6 +17,16 @@ const Navbar = () => {
     useRoleRefreshwithToggle
   );
   console.log("role", role);
+  const location = useLocation().pathname;
+
+  // {() => setThemeIsDark((prev) => !prev)}
+  // const handleThemeChange = () => {
+  //   // setThemeIsDark((prev) => !prev);
+  //   console.log("theme", theme.target.value);
+  //   localStorage.setItem("theme", theme);
+  //   setTheme(theme);
+  // };
+
   const handleSignOut = () => {
     logOut()
       .then(() => {
@@ -30,6 +42,7 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
+
       {role === "buyer" && (
         <li>
           <Link to="/products/all">products</Link>
@@ -41,6 +54,12 @@ const Navbar = () => {
       </li>
       <li>
         <Link to="/dashboard">DashBoard</Link>
+      </li>
+      <li>
+        <HashLink to="/#about-us">About Us</HashLink>
+      </li>
+      <li>
+        <HashLink to="/#contact">Contact Us</HashLink>
       </li>
     </>
   );
@@ -80,12 +99,23 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0">{navElement}</ul>
       </div>
       <div className="navbar-end">
+        <input
+          onChange={() =>
+            setThemeIsDark((prev) => {
+              localStorage.setItem("themeIsDark", !prev);
+              return !prev;
+            })
+          }
+          type="checkbox"
+          className="toggle  md:toggle-lg  mx-2"
+          checked={themeIsDark}
+        />
         {!currentUser?.uid ? (
           <>
-            <Link to="/signup" className="btn">
+            <Link to="/signup" className="btn btn-sm md:btn-md mr-2">
               sign Up
             </Link>
-            <Link to="/signin" className="btn">
+            <Link to="/signin" className="btn btn-sm md:btn-md">
               sign In
             </Link>
           </>
@@ -105,26 +135,28 @@ const Navbar = () => {
             </button>
           </>
         )}
-        <label
-          htmlFor="dashboard-drawer"
-          tabIndex={0}
-          className="btn btn-ghost lg:hidden"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {location.startsWith("/dashboard") && (
+          <label
+            htmlFor="dashboard-drawer"
+            tabIndex={0}
+            className="btn btn-ghost lg:hidden"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h8m-8 6h16"
-            />
-          </svg>
-        </label>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
+        )}
       </div>
     </div>
   );

@@ -23,9 +23,9 @@ const EachOrder = ({ eachOrder }) => {
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
-        <img src={bikeImage} alt="Shoes" />
+        <img className="max-h-[300px]" src={bikeImage} alt="Shoes" />
       </figure>
-      <div className="card-body">
+      <div className="card-body justify-end">
         <div>
           <h2 className="card-title">
             {bikeModel}

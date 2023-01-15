@@ -98,23 +98,24 @@ const AdvertisedProducts = () => {
   }
   return (
     <>
-      {advertisedProducts.length !== 0 && (role === "buyer" || role == null) && (
-        <div className="my-12">
-          <h1 className="font-bold text-2xl text-center mb-6">
-            Advertised Items
-          </h1>
-          <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 gap-6 justify-center ">
-            {advertisedProducts?.map((eachProduct, i) => (
-              <EachAdvertisementProduct
-                key={i}
-                eachProduct={eachProduct}
-                refetch={refetch}
-                setSelectedProduct={setSelectedProduct}
-              />
-            ))}
+      {advertisedProducts.length !== 0 &&
+        (role === "buyer" || role == null) && (
+          <div className="my-12">
+            <h1 className="font-bold text-2xl text-center mb-6">
+              Advertised Items
+            </h1>
+            <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 justify-center ">
+              {advertisedProducts?.map((eachProduct, i) => (
+                <EachAdvertisementProduct
+                  key={i}
+                  eachProduct={eachProduct}
+                  refetch={refetch}
+                  setSelectedProduct={setSelectedProduct}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {selectedProduct && (
         <>

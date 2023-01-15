@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import useRole from "../../../hooks/useRole/useRole";
 
@@ -8,7 +8,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const [role, roleLoading, roleLoadingForUnSigned] = useRole(currentUser?.uid);
-
+  const location = useLocation();
   useEffect(() => {
     fetch("https://used-bike-bazar-server.vercel.app/catetories")
       .then((res) => res.json())
@@ -21,14 +21,14 @@ const Categories = () => {
   };
   // console.log("categories", categories);
   // console.log("current user", currentUser);
-  if (categories.length === 0 || !currentUser?.uid || roleLoadingForUnSigned) {
+  if (categories.length === 0 || roleLoadingForUnSigned) {
     return;
   }
   // (role === "buyer" || role == null)
   return (
     <>
-      {currentUser?.uid && role === "buyer" && (
-        <div>
+      {(!currentUser?.uid || role === "buyer") && (
+        <div className="my-12">
           <h1 className="font-bold text-2xl my-4">select your category</h1>
           {categories.map((category) => (
             <button

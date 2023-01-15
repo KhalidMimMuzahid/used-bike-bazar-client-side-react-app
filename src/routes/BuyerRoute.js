@@ -29,12 +29,18 @@ const BuyerRoute = ({ children }) => {
   // if (roleLoadingForUnSigned) {
   //   return <h1>role loading</h1>;
   // }
+  // state={{ from: location }} replace
+  if (!currentUser?.uid) {
+    return <Navigate to="/signin"></Navigate>;
+  }
   if (roleLoading) {
     return;
   }
+
   if (currentUser?.uid && role === "buyer") {
     return children;
   }
+
   if (currentUser?.uid) {
     logOut()
       .then(() => {

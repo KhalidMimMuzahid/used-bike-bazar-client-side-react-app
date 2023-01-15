@@ -21,7 +21,7 @@ const EachItem = ({ eachitem }) => {
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
       <figure>
-        <img src={bikeImage} alt="Shoes" />
+        <img className="max-h-[300px]" src={bikeImage} alt="Shoes" />
       </figure>
       <div className="card-body">
         <div>

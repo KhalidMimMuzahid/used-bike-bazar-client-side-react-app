@@ -43,11 +43,11 @@ const EachAdvertisementProduct = ({
     return navigate("/signin");
   };
   return (
-    <div className="card w-92 bg-base-100 shadow-xl mx-auto">
+    <div className="card w-92 bg-base-100 shadow-xl mx-auto  ">
       <figure>
-        <img src={bikeImage} alt="Shoes" />
+        <img className="max-h-[300px]" src={bikeImage} alt="Shoes" />
       </figure>
-      <div className="card-body">
+      <div className="card-body justify-end">
         <div>
           <h2 className="card-title">
             {bikeModel}
@@ -55,10 +55,10 @@ const EachAdvertisementProduct = ({
           </h2>
           <p>Category: {category}</p>
           <p>
-            Asking price: {brandNewPrice} <span className="text-xl">৳</span>
+            Asking price: {askingPrice} <span className="text-xl">৳</span>
           </p>
           {/* <p>
-          Brand new price  : {askingPrice} <span className="text-xl">৳</span>
+          Brand new price  : {brandNewPrice} <span className="text-xl">৳</span>
           </p> */}
           <p>postDate: {postDate}</p>
           <div className="flex items-center">

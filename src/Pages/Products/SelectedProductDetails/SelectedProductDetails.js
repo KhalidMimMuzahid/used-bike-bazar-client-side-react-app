@@ -93,7 +93,7 @@ const SelectedProductDetails = () => {
     <>
       <div className="card w-full px-12 md:px-36 lg:px-32 xl:px-48 bg-base-100 shadow-xl">
         <figure>
-          <img src={bikeImage} alt="Shoes" />
+          <img className="max-h-[300px]" src={bikeImage} alt="Shoes" />
         </figure>
         <div className="card-body">
           <div>

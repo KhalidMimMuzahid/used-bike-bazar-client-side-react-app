@@ -20,6 +20,7 @@ const SignIn = () => {
 
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
+  console.log("from", from);
 
   const navigate = useNavigate();
   if (token) {
@@ -60,7 +61,63 @@ const SignIn = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex flex-col justify-center items-center">
+      <div className=" px-4 py-8 w-96">
+        <h1 className="font-bold text-center">credential Sample:</h1>
+        <div>
+          <h1 className="my-2">
+            <span className="font-bold">buyer: </span>
+            <input
+              type="text"
+              value="buyer1@gmail.com"
+              readOnly
+              className="border mb-1 pl-2"
+            />
+            <br />
+            <span className="font-bold">password: </span>
+            <input
+              type="text"
+              value="1@qWaS"
+              readOnly
+              className="border mb-1 pl-2"
+            />
+          </h1>
+          <h1 className="my-2">
+            <span className="font-bold">seller: </span>
+            <input
+              type="text"
+              value="seller1@gmail.com"
+              readOnly
+              className="border mb-1 pl-2"
+            />
+            <br />
+            <span className="font-bold">password: </span>
+            <input
+              type="text"
+              value="1@qWaS"
+              readOnly
+              className="border mb-1 pl-2"
+            />
+          </h1>
+          <h1 className="my-2">
+            <span className="font-bold">admin: </span>
+            <input
+              type="text"
+              value="admin@gmail.com"
+              readOnly
+              className="border mb-1 pl-2"
+            />
+            <br />
+            <span className="font-bold">password: </span>
+            <input
+              type="text"
+              value="1@qWaS"
+              readOnly
+              className="border pl-2"
+            />
+          </h1>
+        </div>
+      </div>
       <div className="w-96 px-7">
         <h1 className="text-xl text-center">Sign In</h1>
         <form onSubmit={handleSubmit(handleSignIn)}>

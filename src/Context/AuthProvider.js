@@ -31,11 +31,9 @@ const AuthProvider = ({ children }) => {
     setIsLoading(true);
     return signOut(auth);
   };
-
   const updateUser = (info) => {
     return updateProfile(auth.currentUser, info);
   };
-
   const provider = new GoogleAuthProvider();
   const googleSignIn = () => {
     return signInWithPopup(auth, provider);
@@ -50,7 +48,6 @@ const AuthProvider = ({ children }) => {
     });
     return () => unSubscribe();
   }, []);
-
   const authInfo = {
     createUserwithPassword,
     signIn,
