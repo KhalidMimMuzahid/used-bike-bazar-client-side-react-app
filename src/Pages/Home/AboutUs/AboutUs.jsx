@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import bullet2 from "../../../Assets/Images/bullet2.jpg";
 const AboutUs = () => {
   return (
-    <div className="  min-h-full px-8 lg:px-0" id="about-us">
+    <div className="  min-h-full px-8 lg:px-0 mx-4" id="about-us">
       <div className="z-0 flex items-center justify-center w-auto gap-12 p-4 px-0 flex-col lg:flex-row ">
         <img
           alt=""

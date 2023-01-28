@@ -100,7 +100,7 @@ const AdvertisedProducts = () => {
     <>
       {advertisedProducts.length !== 0 &&
         (role === "buyer" || role == null) && (
-          <div className="my-12">
+          <div className="my-12 mx-4">
             <h1 className="font-bold text-2xl text-center mb-6">
               Advertised Items
             </h1>

@@ -15,9 +15,6 @@ const Home = () => {
       <GoToProducts />
       <AboutUs />
       <ContactUS />
-      {/* <div className="text-4xl font-extrabold text-center my-12">
-        TODO: add total 8 section
-      </div> */}
     </div>
   );
 };
